@@ -12,16 +12,27 @@ import router from './router.js'
 //引入vue-resource
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
+//设置根目录
+Vue.http.options.root = 'http://www.liulongbin.top:3005'
+
+//设置时间全局过滤器
+import moment from 'moment'
+Vue.filter('dateFormat', function (dateStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
+    return moment(dateStr).format(pattern)
+})
 
 
 //引入Mint中Hearder组件
-import { Header, Swipe, SwipeItem } from 'mint-ui'
+import { Header, Swipe, SwipeItem, Button } from 'mint-ui'
 import 'mint-ui/lib/style.css'
 Vue.component(Header.name, Header)
 
 //引入Mint中的swipe组件
 Vue.component(Swipe.name, Swipe)
 Vue.component(SwipeItem.name, SwipeItem)
+
+//引入mint中的button组件
+Vue.component(Button.name, Button)
 
 //引入mui的css样式
 import './lib/mui/css/mui.min.css'
