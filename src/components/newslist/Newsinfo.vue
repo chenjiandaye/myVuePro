@@ -3,7 +3,7 @@
     <h3 class="title">{{newsinfo.title}}</h3>
     <p class="subtitle">
       <span>发表时间：{{newsinfo.add_time | dateFormat}}</span>
-      <span>点击：</span>
+      <span>点击：{{newsinfo.click}}</span>
     </p>
     <hr>
     <div class="content" v-html="newsinfo.content"></div>
