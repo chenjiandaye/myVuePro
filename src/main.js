@@ -16,6 +16,96 @@ Vue.use(VueResource)
 Vue.http.options.root = 'http://www.liulongbin.top:3005'
 Vue.http.options.emulateJSON = true;
 
+//引入vuex
+import Vuex from 'vuex'
+Vue.use(Vuex)
+var car = JSON.parse(localStorage.getItem("car") || '[]')
+var store = new Vuex.Store({
+    state: {
+        car: car
+    },
+    mutations: {
+        addToCar(state, goodinfo) {
+            var flag = false
+            state.car.some(item => {
+                if (item.id === goodinfo.id) {
+                    item.num += parseInt(goodinfo.num)
+                    flag = true
+                    return true
+                }
+            })
+            if (!flag) {
+                state.car.push(goodinfo)
+            }
+            localStorage.setItem("car", JSON.stringify(state.car))
+        },
+        getgoodcountnum(state, goodinfo) {
+            state.car.some(item => {
+                if (item.id === goodinfo.id) {
+                    item.num = parseInt(goodinfo.num)
+                    return true
+                }
+            })
+            localStorage.setItem("car", JSON.stringify(state.car))
+        },
+        removegood(state, id) {
+            state.car.some((item, i) => {
+                if (item.id == id) {
+                    state.car.splice(i, 1)
+                    return true
+                }
+            })
+            localStorage.setItem("car", JSON.stringify(state.car))
+        },
+        updateSelected(state, goodinfo) {
+            state.car.some(item => {
+                if (item.id == goodinfo.id) {
+                    item.selected = goodinfo.selected
+                    return true
+                }
+            })
+            localStorage.setItem("car", JSON.stringify(state.car))
+        }
+    },
+    getters: {
+        getAllnum(state) {
+            var c = 0;
+            state.car.forEach(item => {
+                c += item.num
+            })
+            return c
+        },
+        getInitCount(state) {
+            var o = {}
+            state.car.forEach(item => {
+                o[item.id] = item.num
+            })
+            return o
+        },
+        getGoodNum(state) {
+            var o = {
+                count: 0,
+                price: 0
+            }
+            state.car.forEach(item => {
+                if (item.selected == true) {
+                    o.count += item.num
+                    o.price += item.price * item.num
+                }
+            })
+            return o
+        },
+        getSelected(state) {
+            var o = {}
+            state.car.forEach(item => {
+                o[item.id] = item.selected
+            })
+            return o
+        }
+    }
+})
+
+
 //设置时间全局过滤器
 import moment from 'moment'
 Vue.filter('dateFormat', function (dateStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
@@ -57,5 +147,6 @@ import './lib/mui/css/icons-extra.css'
 var vm = new Vue({
     el: '#app',
     render: c => c(app),
-    router
+    router,
+    store
 })

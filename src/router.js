@@ -11,6 +11,8 @@ import Photolist from './components/photos/Photolist.vue'
 import photoinfo from './components/photos/Photoinfo.vue'
 import goodslist from './components/goods/Goodslist.vue'
 import goodinfo from './components/goods/Goodinfo.vue'
+import gooddesc from './components/goods/Gooddesc.vue'
+import goodcomment from './components/goods/Goodcomment.vue'
 
 var router = new VueRouter({
     routes: [
@@ -24,7 +26,9 @@ var router = new VueRouter({
         {path:'/home/photoinfo',component:Photolist},
         {path:'/home/photoinfo/:id',component:photoinfo},
         {path:'/home/goodslist',component:goodslist},
-        {path:'/home/goodsinfo/:id',component:goodinfo,name:'gi'}
+        {path:'/home/goodsinfo/:id',component:goodinfo,name:'gi'},
+        {path:'/home/gooddesc/:id',component:gooddesc,name:'gooddesc'},
+        {path:'/home/goodcomment/:id',component:goodcomment,name:'goodcomment'}
     ],
     linkActiveClass:'mui-active'
 });
